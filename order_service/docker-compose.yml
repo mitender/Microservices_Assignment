@@ -13,7 +13,7 @@ services:
       - .:/app
   mongo:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongodb-order
     ports:
       - "27017:27017"
     volumes:
