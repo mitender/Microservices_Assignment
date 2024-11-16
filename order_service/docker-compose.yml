@@ -2,7 +2,7 @@ version: '3.8'
 services:
   web:
     build: .
-    container_name: flask_app
+    container_name: order-service
     ports:
       - "5001:5001"
     environment:
@@ -15,7 +15,7 @@ services:
     image: mongo:latest
     container_name: mongodb-order
     ports:
-      - "27017:27017"
+      - "27018:27017"  # Change host port to 27018 (or any other free port)
     volumes:
       - mongodb_data:/data/db
 

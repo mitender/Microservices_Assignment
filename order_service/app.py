@@ -5,7 +5,7 @@ import requests
 
 app = Flask(__name__)
 #app.config["MONGO_URI"] = "mongodb://localhost:27017/orders_db"  # Replace with your MongoDB URI
-app.config["MONGO_URI"] = "mongodb://mongo:27017/orders_db"  # 'mongo' is the name of the MongoDB container
+app.config["MONGO_URI"] = "mongodb://mongo:27018/orders_db"  # 'mongo' is the name of the MongoDB container
 mongo = PyMongo(app)
 
 @app.route('/orders', methods=['POST'])
