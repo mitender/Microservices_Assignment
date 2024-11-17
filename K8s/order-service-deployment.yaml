@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order_service
+  name: order-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order_service
+      app: order-service
   template:
     metadata:
       labels:
-        app: order_service
+        app: order-service
     spec:
       containers:
-        - name: order_service
-          image: order_service:latest
+        - name: order-service
+          image: order-service:latest
           ports:
             - containerPort: 5001
           env:
             - name: MONGO_URI
-              value: "mongodb://mongodb_order:27017/orders_db"
+              value: "mongodb://mongodb-order:27017/orders_db"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: order_service
+  name: order-service
 spec:
   selector:
-    app: order_service
+    app: order-service
   ports:
     - protocol: TCP
       port: 5001

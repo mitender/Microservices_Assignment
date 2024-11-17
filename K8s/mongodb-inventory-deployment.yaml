@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb_inventory
+  name: mongodb-inventory
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb_inventory
+      app: mongodb-inventory
   template:
     metadata:
       labels:
-        app: mongodb_inventory
+        app: mongodb-inventory
     spec:
       containers:
-        - name: mongodb_inventory
+        - name: mongodb-inventory
           image: mongo
           ports:
             - containerPort: 27017
           volumeMounts:
-            - name: mongodb_inventory_data
+            - name: mongodb-inventory-data
               mountPath: /data/db
       volumes:
-        - name: mongodb_inventory_data
+        - name: mongodb-inventory-data
           persistentVolumeClaim:
-            claimName: mongodb_inventory_pvc
+            claimName: mongodb-inventory-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb_inventory
+  name: mongodb-inventory
 spec:
   selector:
-    app: mongodb_inventory
+    app: mongodb-inventory
   ports:
     - port: 27017
       targetPort: 27017

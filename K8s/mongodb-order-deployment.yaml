@@ -1,37 +1,60 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb_order
+  name: mongodb-order
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb_order
+      app: mongodb-order
   template:
     metadata:
       labels:
-        app: mongodb_order
+        app: mongodb-order
     spec:
       containers:
-        - name: mongodb_order
+        - name: mongodb-order-container
           image: mongo
           ports:
             - containerPort: 27017
           volumeMounts:
-            - name: mongodb_order_data
+            - name: mongodb-order-data-volume
               mountPath: /data/db
       volumes:
-        - name: mongodb_order_data
+        - name: mongodb-order-data-volume
           persistentVolumeClaim:
-            claimName: mongodb_order_pvc
+            claimName: mongodb-order-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb_order
+  name: mongodb-order-service
 spec:
   selector:
-    app: mongodb_order
+    app: mongodb-order
   ports:
     - port: 27017
       targetPort: 27017
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-order-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data/mongodb-order
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-order-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
