@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 
 # Use the service name (container name) for MongoDB URI
-app.config["MONGO_URI"] = "mongodb://mongodb-order:27017/orders_db"  # 'mongodb-order' is the container name for MongoDB
+app.config["MONGO_URI"] = "mongodb://mongodb_order:27017/orders_db"  # 'mongodb_order' is the container name for MongoDB
 mongo = PyMongo(app)
 
 @app.route('/orders', methods=['POST'])
@@ -32,7 +32,7 @@ def get_orders():
 
 def check_inventory(product_id, quantity):
     # Use the service name of inventory-service to call the Inventory API
-    response = requests.get(f'http://inventory-service:5000/inventory/{product_id}')
+    response = requests.get(f'http://inventory_service:5000/inventory/{product_id}')
     if response.status_code == 200:
         inventory = response.json()
         return {"available": inventory["stock"] >= quantity}

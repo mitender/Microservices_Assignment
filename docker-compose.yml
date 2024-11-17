@@ -1,0 +1,53 @@
+version: '3'
+services:
+  order-service:
+    build: ./order_service
+    container_name: order_service
+    ports:
+      - "5001:5001"
+    networks:
+      - my-network
+    depends_on:
+      - mongodb_order  # Ensure MongoDB starts before the order service
+    environment:
+      MONGO_URI: "mongodb://mongodb_order:27017/orders_db"  # Point to the order MongoDB instance
+
+  inventory-service:
+    build: ./inventory_service
+    container_name: inventory_service
+    ports:
+      - "5000:5000"
+    networks:
+      - my-network
+    depends_on:
+      - mongodb_inventory  # Ensure MongoDB starts before the inventory service
+    environment:
+      MONGO_URI: "mongodb://mongodb_inventory:27017/inventory_db"  # Point to the inventory MongoDB instance
+
+  mongodb_order:
+    image: mongo
+    container_name: mongodb_order
+    ports:
+      - "27018:27017"  # Expose MongoDB for the order service on port 27018 (host)
+    networks:
+      - my-network
+    volumes:
+      - mongodb-order-data:/data/db  # Persist MongoDB data
+
+  mongodb_inventory:
+    image: mongo
+    container_name: mongodb_inventory
+    ports:
+      - "27017:27017"  # Expose MongoDB for the inventory service on port 27019 (host)
+    networks:
+      - my-network
+    volumes:
+      - mongodb-inventory-data:/data/db  # Persist MongoDB data
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  mongodb-order-data:
+  mongodb-inventory-data:
