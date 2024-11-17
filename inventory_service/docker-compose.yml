@@ -13,9 +13,9 @@ services:
       - .:/app
   mongo:
     image: mongo:latest
-    container_name: mongodb-inventory
+    container_name: mongodb_inventory
     ports:
-      - "27017:27017"
+      - "27018:27017"  # Changed the host port to 27018
     volumes:
       - mongodb_data:/data/db
 

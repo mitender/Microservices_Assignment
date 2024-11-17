@@ -7,15 +7,17 @@ services:
       - "5001:5001"
     environment:
       - FLASK_ENV=development
+      - MONGO_URI=mongodb://mongodb-order:27017/orderdb  # Connect to the MongoDB container by name
     depends_on:
       - mongo
     volumes:
       - .:/app
+
   mongo:
     image: mongo:latest
     container_name: mongodb-order
     ports:
-      - "27018:27017"  # Change host port to 27018 (or any other free port)
+      - "27017:27017"  # Default port to connect to MongoDB
     volumes:
       - mongodb_data:/data/db
 

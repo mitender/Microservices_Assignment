@@ -4,14 +4,14 @@ from bson.objectid import ObjectId
 import requests
 
 app = Flask(__name__)
-#app.config["MONGO_URI"] = "mongodb://localhost:27017/orders_db"  # Replace with your MongoDB URI
-app.config["MONGO_URI"] = "mongodb://mongo:27018/orders_db"  # 'mongo' is the name of the MongoDB container
+
+# Use the service name (container name) for MongoDB URI
+app.config["MONGO_URI"] = "mongodb://mongodb-order:27017/orders_db"  # 'mongodb-order' is the container name for MongoDB
 mongo = PyMongo(app)
 
 @app.route('/orders', methods=['POST'])
 def create_order():
     print("inside app")
-    print(request)
     data = request.json
     # Simulate calling Inventory Service to check stock availability
     response = check_inventory(data['product_id'], data['quantity'])
@@ -31,9 +31,8 @@ def get_orders():
     return jsonify([{"id": str(order["_id"]), "product_id": order["product_id"], "quantity": order["quantity"]} for order in orders])
 
 def check_inventory(product_id, quantity):
-    # Simulate API call to Inventory Service (simplified)
-    print("check inventory")
-    response = requests.get(f'http://localhost:5000/inventory/{product_id}')
+    # Use the service name of inventory-service to call the Inventory API
+    response = requests.get(f'http://inventory-service:5000/inventory/{product_id}')
     if response.status_code == 200:
         inventory = response.json()
         return {"available": inventory["stock"] >= quantity}
