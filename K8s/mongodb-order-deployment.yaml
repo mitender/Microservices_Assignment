@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb_order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb_order
+  template:
+    metadata:
+      labels:
+        app: mongodb_order
+    spec:
+      containers:
+        - name: mongodb_order
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb_order_data
+              mountPath: /data/db
+      volumes:
+        - name: mongodb_order_data
+          persistentVolumeClaim:
+            claimName: mongodb_order_pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb_order
+spec:
+  selector:
+    app: mongodb_order
+  ports:
+    - port: 27017
+      targetPort: 27017
