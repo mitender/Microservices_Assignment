@@ -2,6 +2,7 @@ version: '3'
 services:
   order-service:
     build: ./order_service
+    image: order-service:latest  # Specify image name
     container_name: order_service
     ports:
       - "5001:5001"
@@ -14,6 +15,7 @@ services:
 
   inventory-service:
     build: ./inventory_service
+    image: inventory-service:latest  # Specify image name
     container_name: inventory_service
     ports:
       - "5000:5000"

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: inventory-service:latest
+          image: mitender7/inventory-service:latest
           ports:
             - containerPort: 5000
           env:
@@ -32,4 +32,3 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  
