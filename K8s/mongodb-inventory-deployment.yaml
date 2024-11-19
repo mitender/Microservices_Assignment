@@ -32,6 +32,8 @@ metadata:
 spec:
   selector:
     app: mongodb-inventory
+  type: NodePort
   ports:
     - port: 27017
       targetPort: 27017
+      nodePort: 32001

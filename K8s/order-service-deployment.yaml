@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: mitender7/ order-service:latest
+          image: mitender7/order-service:latest
           ports:
             - containerPort: 5001
           env:
@@ -28,7 +28,9 @@ metadata:
 spec:
   selector:
     app: order-service
+  type: NodePort
   ports:
     - protocol: TCP
       port: 5001
       targetPort: 5001
+      nodePort: 30002

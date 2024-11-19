@@ -32,9 +32,11 @@ metadata:
 spec:
   selector:
     app: mongodb-order
+  type: NodePort
   ports:
     - port: 27017
       targetPort: 27017
+      nodePort: 32002
 ---
 apiVersion: v1
 kind: PersistentVolume

@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 # Use the service name (container name) for MongoDB URI
-app.config["MONGO_URI"] = "mongodb://mongodb_inventory:27017/inventory_db"  # Update port to 27018
+app.config["MONGO_URI"] = "mongodb://mongodb-inventory:27017/inventory_db"  # Update port to 27018
 mongo = PyMongo(app)
 
 @app.route('/inventory/<int:product_id>', methods=['GET'])
